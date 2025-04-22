@@ -7,10 +7,10 @@ namespace square{
     class Squaremat{
         private: 
             int size;
-            int **mat;
+            double **mat;
         
         public: 
-            int **getmat()const;
+            double **getmat()const;
             int getsize()const;
             Squaremat(int s);
             Squaremat(const Squaremat& other);
@@ -21,28 +21,34 @@ namespace square{
             Squaremat operator-(const Squaremat& other)const;
             Squaremat& operator-=(const Squaremat& other);
             Squaremat operator%(const Squaremat& other)const;
-            Squaremat operator++()const;
+            Squaremat& operator%=(const Squaremat& other);
+            Squaremat operator%(int n)const;
+            Squaremat& operator%=(int n);
+            Squaremat& operator++();
+            Squaremat operator++(int);
+            //Squaremat& operator++()const;
             Squaremat operator--()const;
-            Squaremat operator/(int n)const;
-            //Squaremat& operator/=(const Squaremat& other);
+            Squaremat operator/(double n)const;
+            Squaremat& operator/=(const Squaremat& other);
+            Squaremat operator/(const Squaremat& other) const;
+            Squaremat cofactormat()const;
             bool operator==(const Squaremat& other)const;
             bool operator!=(const Squaremat& other)const;
             bool operator<(const Squaremat& other)const;
             bool operator<=(const Squaremat& other)const;
             bool operator>(const Squaremat& other)const;
             bool operator>=(const Squaremat& other)const;
-            Squaremat operator%(int n)const;
-            Squaremat operator*(int n)const;
-            Squaremat& operator*=(const Squaremat& other) ;
+            Squaremat operator*(double n)const;
+            Squaremat& operator*=(double n);
             Squaremat operator~()const;
             Squaremat operator-() const;
             Squaremat operator*(const Squaremat& other)const;
+            Squaremat& operator*=(const Squaremat& other) ;
             Squaremat operator^(int n)const;
-            int* operator[](int x);
-            const int* operator[](int x) const;
-            int operator!()const;
+            double* operator[](int x);
+            const double* operator[](int x) const;
+            double operator!()const;
             Squaremat deletee(const Squaremat& m,int row,int col)const;
-            Squaremat operator/=(int n) const;
             friend std::ostream& operator<<(std::ostream& os, const Squaremat& mat);
             //void swap(int*p,int*q);
     };
