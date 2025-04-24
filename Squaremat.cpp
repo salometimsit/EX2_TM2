@@ -85,6 +85,9 @@ Squaremat Squaremat::operator-(const Squaremat& other)const{
     return newm;
 }
 Squaremat& Squaremat::operator-=(const Squaremat& other) {
+    if(size!=other.getsize()){
+        throw invalid_argument("cannot sub without same size of matrix");
+    }
     *this = *this-other;
     return *this;
 }
@@ -101,10 +104,16 @@ Squaremat Squaremat::operator%(const Squaremat& other)const{
     return newm;
 }
 Squaremat& Squaremat::operator%=(const Squaremat& other) {
+    if(size!=other.getsize()){
+        throw invalid_argument("cannot modulo without same size of matrix");
+    }
     *this = *this % other;
     return *this;
 }
 Squaremat Squaremat::operator%(int n)const{
+    if(n==0){
+        throw invalid_argument("cannot modulo without same size of matrix");
+    }
     Squaremat newm(size);
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
@@ -114,6 +123,9 @@ Squaremat Squaremat::operator%(int n)const{
     return newm;
 }
 Squaremat& Squaremat::operator%=(int n) {
+    if(n==0){
+        throw invalid_argument("cannot modulo without same size of matrix");
+    }
     *this = *this % n;
     return *this;
 }
@@ -147,16 +159,26 @@ Squaremat Squaremat::operator++(int){
 //     return *this;
 
 // }
-Squaremat Squaremat::operator--()const{
+Squaremat& Squaremat::operator--(){
+    for (int i = 0; i < getsize(); i++) {
+        for (int j = 0; j < getsize(); j++) {
+            mat[i][j] -= 1; 
+        }
+    }
+    return *this; 
+}
+Squaremat Squaremat::operator--(int){
+    //post incriment
     Squaremat newm(size);
+    newm=*this;
     for(int i=0;i<getsize();i++){
         for(int j=0;j<getsize();j++){
-            newm.getmat()[i][j]=mat[i][j]-1;
+            mat[i][j]-=1;
         }
     }
     return newm;
-
 }
+
 Squaremat Squaremat::operator/(double n)const{
     Squaremat newm(size);
     for(int i=0;i<size;i++){
@@ -167,20 +189,21 @@ Squaremat Squaremat::operator/(double n)const{
     return newm;
 }
 Squaremat Squaremat::operator/(const Squaremat& other) const {
-    return (*this) * other.cofactormat();
+    return (*this) * other.inversematrix();
 }
 Squaremat& Squaremat::operator/=(const Squaremat& other) {
     *this = *this/other;
     return *this;
 }
 
-Squaremat Squaremat::cofactormat()const{
+Squaremat Squaremat::inversematrix()const{
     Squaremat cof(size);
-    int d= !(*this);
+    double d= !(*this);
+    std::cout << "Determinant: " << d << std::endl;
     int sign=0;
     for(int i=0;i<size;i++){
         for(int j=0;j<size;j++){
-            if(j%2==0){
+            if((i+j)%2==0){
                 sign =1;
             }
             else{
@@ -373,31 +396,7 @@ double* Squaremat::operator[](int x){
 const double* Squaremat::operator[](int x) const {
     return mat[x];
 }
-double Squaremat::operator!()const{
-    int res=0;
-    int sign;
-    if(size==1){
-        return mat[0][0];
-    }
-    if(size==2){
-        int sum= (mat[0][0]*mat[1][1])- (mat[0][1]*mat[1][0]);
-        return sum;
 
-    }
-    for(int j=0;j<size;j++){
-        if(j%2==0){
-            sign =1;
-        }
-        else{
-            sign =-1;
-        }
-        Squaremat m=deletee(*this,0,j);
-        int det =!m;
-        res+=sign*det*mat[0][j];
-    }
-    return res;
-
-}
 Squaremat Squaremat::deletee(const Squaremat& m,int row,int col)const{
     Squaremat newm(m.getsize()-1); 
     int tmpi=0;
@@ -417,6 +416,31 @@ Squaremat Squaremat::deletee(const Squaremat& m,int row,int col)const{
         tmpi++;
     }
     return newm;
+
+}
+double Squaremat::operator!()const{
+    double res=0;
+    int sign;
+    if(size==1){
+        return mat[0][0];
+    }
+    if(size==2){
+        double sum= (mat[0][0]*mat[1][1])- (mat[0][1]*mat[1][0]);
+        return sum;
+
+    }
+    for(int j=0;j<size;j++){
+        if(j%2==0){
+            sign =1;
+        }
+        else{
+            sign =-1;
+        }
+        Squaremat m=deletee(*this,0,j);
+        double det =!m;
+        res+=sign*det*mat[0][j];
+    }
+    return res;
 
 }
 namespace square {
