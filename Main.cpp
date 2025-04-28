@@ -1,3 +1,4 @@
+//Email: timsitmelosa@gmail.com
 #include "Squaremat.hpp"
 using namespace square;
 using namespace std;

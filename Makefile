@@ -1,3 +1,4 @@
+#Email: timsitmelosa@gmail.com
 CXX = c++
 CXXFLAGS = -std=c++17 -Wall -Wextra
 

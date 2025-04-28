@@ -1,3 +1,4 @@
+//Email: timsitmelosa@gmail.com
 #ifndef SQUAREMAT_HPP
 #define SQUAREMAT_HPP
 #include <iostream>
