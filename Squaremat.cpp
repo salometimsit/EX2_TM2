@@ -308,6 +308,10 @@
   * @return The result of this * inverse(other)
   */
  Squaremat Squaremat::operator/(const Squaremat& other) const {
+    double det = !other;
+    if (det == 0) {
+        throw invalid_argument("Cannot divide by a singular matrix (determinant is zero)");
+    }
      return (*this) * other.inversematrix();
  }
  
@@ -329,7 +333,6 @@
  Squaremat Squaremat::inversematrix()const{
      Squaremat cof(size);
      double d= !(*this);
-     std::cout << "Determinant: " << d << std::endl;
      int sign=0;
      for(int i=0;i<size;i++){
          for(int j=0;j<size;j++){
@@ -594,7 +597,10 @@
   * @return Pointer to the row, allowing for [row][col] access
   */
  double* Squaremat::operator[](int x){
-     return mat[x];
+    if (x < 0 || x >= size) {
+        throw out_of_range("Matrix index out of bounds");
+    }
+    return mat[x];
  }
  
  /**
@@ -603,7 +609,10 @@
   * @return Const pointer to the row, allowing for [row][col] access
   */
  const double* Squaremat::operator[](int x) const {
-     return mat[x];
+    if (x < 0 || x >= size) {
+        throw out_of_range("Matrix index out of bounds");
+    }
+    return mat[x];
  }
  
  /**

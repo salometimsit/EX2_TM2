@@ -109,6 +109,12 @@ make
 
 ## Notes on Comparison Operators
 The comparison operators (`==`, `!=`, `<`, `<=`, `>`, `>=`) compare matrices based on the sum of all elements rather than the traditional element-by-element comparison. This provides an ordering for matrices that might be useful in some contexts but is not the standard mathematical definition of matrix equality.
+## WEBSITES I USED FOR HELP:
+- matrix devision- https://www.wikihow.com/Divide-Matrices#:~:text=Understand%20matrix%20%22division.%22%20Technically,matrix%20is%20an%20undefined%20function.&text=The%20closest%20equivalent%20is%20multiplying,*%20%5BB%5D%2D1.
+- Claude- helped me document and write the readme file only- here is the prompt: 
+https://claude.ai/share/8c42f6f8-9f58-4c86-8cbe-903cfd48cb58
+- The rest of my knowledge came from the course Linear Algebra 1, Ariel's University
+
 
 ## Author
 Contact: timsitmelosa@gmail.com
